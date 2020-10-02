@@ -20,14 +20,15 @@
 // Add a listener for click events so that when a user clicks on a card, the headline of the article is logged to the console.
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
-placement = document.querySelector('.cards-container')
-function artMaker(obj){
+
+
+function artMaker(authorName, authorPhoto, headline){
     const card = document.createElement('div')
         card.classList.add('card')
 
-    const headline = document.createElement('div')
-        headline.classList.add('headline')
-        headline.textContent= `${obj}`
+    const header = document.createElement('div')
+        header.classList.add('headline')
+        header.textContent= `${headline}`
 
     const author = document.createElement('div')
         author.classList.add('author')
@@ -35,19 +36,19 @@ function artMaker(obj){
         imageContainer.classList.add('img-container')
 
     const image = document.createElement('img')
-        image.src = 'obj.authorPhoto'
+        image.src = authorPhoto
 
         const span = document.createElement('span')
-        span.textContent = `By ${obj}`
+        span.textContent = `By ${authorName}`
 
-    card.append(headline)
+    card.append(header)
     card.append(author)
     card.append(imageContainer)
     imageContainer.appendChild(image)
     card.append(span)
 
     card.addEventListener('click', ()=> {
-        console.log(obj.headline)
+        console.log(headline)
     })
 
     return card
@@ -57,24 +58,25 @@ console.log(artMaker())
 
 axios.get('https://lambda-times-api.herokuapp.com/articles')
 .then(res => {
-
+    placement = document.querySelector('.cards-container')
     const item = res.data.articles.bootstrap
     const query =res.data.articles.jquery
     const tech = res.data.articles.technology
 item.forEach(element => {
     const boot = artMaker(element.authorName, element.authorPhoto, element.headline)
     console.log(boot)
-    placement.append(boot)
+    placement.appendChild(boot)
 })
 query.forEach(element => {
     const boot1 = artMaker(element.authorName, element.authorPhoto, element.headline)
     console.log(boot1)
-    placement.append(boot1)
+    placement.appendChild(boot1)
 })
 tech.forEach(element => {
     const boot2 = artMaker(element.authorName, element.authorPhoto, element.headline)
     console.log(boot2)
-    placement.append(boot2)
+    placement.appendChild(boot2)
+    console.log(placement)
 })
 
 }).catch(err =>{
