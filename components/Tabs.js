@@ -10,4 +10,23 @@ import axios from 'axios'
 //    <div class="tab">topic here</div>
 //
 // NOTE: you do _not_ need to install axios as it's included in the HTML via script element
-//axios.get('https://lambda-times-api.herokuapp.com/topics').then(res =>)
+function niceDiv(obj){
+    placement = document.querySelector('.title')
+    const topic =document.createElement('div')
+    topic.classList.add('tab')
+    topic.textContent = `${obj}`
+    return topic
+}
+axios.get('https://lambda-times-api.herokuapp.com/topics')
+.then(res =>{
+const item = res.data.topics
+item.forEach(element => {
+    const tabs = niceDiv(element)
+   // console.log(tabs)
+    placement.append(tabs)
+});
+
+}).catch(err =>{
+    console.log(err)
+    debugger
+})
